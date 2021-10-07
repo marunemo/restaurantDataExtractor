@@ -7,7 +7,11 @@ with open("hanchelin-guide-export.json") as jsonFile:
 
     for rest in restList:
         try:
-            dayOff.write(rest['opening_hours'] + '\n')
+            if type(rest['opening_hours']) == list:
+                for hours in rest['opening_hours']:
+                    dayOff.write(hours + ' & ')
+                dayOff.write('\n')
+            else:
+                dayOff.write(rest['opening_hours'] + '\n')
         except:
             pass
-    
