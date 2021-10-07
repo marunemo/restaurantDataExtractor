@@ -2,5 +2,12 @@ import json
 
 with open("hanchelin-guide-export.json") as jsonFile:
     restData = json.load(jsonFile)
+    restList = restData["식당"]
+    dayOff = open('dayOff.txt', 'w')
 
-    print(len(restData["식당"]))
+    for rest in restList:
+        try:
+            dayOff.write(rest['opening_hours'] + '\n')
+        except:
+            pass
+    
