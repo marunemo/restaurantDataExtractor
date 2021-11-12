@@ -8,13 +8,15 @@ with open("hanchelin-guide-export.json") as jsonFile:
 
     for rest in restList:
         try:
+            onlyBreak = True
+            breakDate = ""
             dateData = ""
             if type(rest['opening_hours']) == list:
                 for hours in rest['opening_hours']:
                     dateData += hours + ' & '
                 dateData += '\n'
             else:
-                dateData + rest['opening_hours'] + '\n'
+                dateData += rest['opening_hours'] + '\n'
             week = "월화수목금토일"
             dateData = dateData.strip(" \n&").split(" & ")
             weekHours = {i : [[]] for i in week}
@@ -34,10 +36,9 @@ with open("hanchelin-guide-export.json") as jsonFile:
                     hours = hours[index:]
                 else:
                     if weekRange == "휴무일:":
-                        weekHours = hours
+                        breakDate = hours
                     else:
-                        weekHours = "휴무일: " + hours
-                    break
+                        breakDate = "휴무일: " + hours
 
                 if '브레이크타임' in hours:
                     spliter = hours[hours.index(" ") + 1:].split(" ~ ")
@@ -46,20 +47,21 @@ with open("hanchelin-guide-export.json") as jsonFile:
                             if openingHour[1] > spliter[0] and openingHour[0] < spliter[0]:
                                 weekHours[day].append([spliter[1], openingHour[1]])
                                 weekHours[day][i][1] = spliter[0]
-                else:
+                elif validWeek:
+                    onlyBreak = False
                     for day in validWeek:
                         weekHours[day] = [hours.split(" ~ ")]
             if type(weekHours) == str:
                 rest['opening_hours'] = weekHours
             else:
-                weekObject = {}
+                weekObject = {'onlyBreak': onlyBreak, 'breakDate': breakDate}
                 for day in week:
                     dayWeek = sorted(weekHours[day])
                     weekObject[day] = dayWeek
                 rest['opening_hours'] = weekObject
             restObject["식당"].append(rest)
-        except Exception as e:
+        except KeyError as e:
             restObject["식당"].append(rest)
 print("새 데이터량 :", len(restObject["식당"]))
 with open('hanchelin-guide-change.json', 'w', encoding='utf8') as result:
-    json.dump(restObject, result)
+    json.dump(restObject, result, ensure_ascii=False)
