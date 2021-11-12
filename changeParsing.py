@@ -51,9 +51,11 @@ with open("hanchelin-guide-export.json") as jsonFile:
             if type(weekHours) == str:
                 rest['opening_hours'] = weekHours
             else:
+                weekObject = {}
                 for day in week:
                     dayWeek = sorted(weekHours[day])
-                    rest['opening_hours'] = day + " : " + str(dayWeek) + " / "
+                    weekObject[day] = dayWeek
+                rest['opening_hours'] = weekObject
             restObject["식당"].append(rest)
         except:
             pass
