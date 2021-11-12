@@ -35,6 +35,7 @@ with open("hanchelin-guide-export.json") as jsonFile:
                     validWeek = hours[:index].split()
                     hours = hours[index:]
                 else:
+                    validWeek = False
                     if weekRange == "휴무일:":
                         breakDate = hours
                     else:
