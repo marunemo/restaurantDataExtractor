@@ -57,8 +57,8 @@ with open("hanchelin-guide-export.json") as jsonFile:
                     weekObject[day] = dayWeek
                 rest['opening_hours'] = weekObject
             restObject["식당"].append(rest)
-        except:
-            pass
+        except Exception as e:
+            restObject["식당"].append(rest)
 print(len(restObject["식당"]))
 with open('hanchelin-guide-change.json', 'w', encoding='utf8') as result:
     json.dump(restObject, result)
