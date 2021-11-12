@@ -4,6 +4,7 @@ restObject = {'식당':[]}
 with open("hanchelin-guide-export.json") as jsonFile:
     restData = json.load(jsonFile)
     restList = restData["식당"]
+    print("원데이터량 :",len(restList))
 
     for rest in restList:
         try:
@@ -59,6 +60,6 @@ with open("hanchelin-guide-export.json") as jsonFile:
             restObject["식당"].append(rest)
         except Exception as e:
             restObject["식당"].append(rest)
-print(len(restObject["식당"]))
+print("새 데이터량 :", len(restObject["식당"]))
 with open('hanchelin-guide-change.json', 'w', encoding='utf8') as result:
     json.dump(restObject, result)
