@@ -1,9 +1,9 @@
 import json
 
+restObject = {'식당':[]}
 with open("hanchelin-guide-export.json") as jsonFile:
     restData = json.load(jsonFile)
     restList = restData["식당"]
-    result = open('hanchelin-guide-change.json', 'w', encoding='utf8')
 
     for rest in restList:
         try:
@@ -54,7 +54,9 @@ with open("hanchelin-guide-export.json") as jsonFile:
                 for day in week:
                     dayWeek = sorted(weekHours[day])
                     rest['opening_hours'] = day + " : " + str(dayWeek) + " / "
-            json.dump(rest, result)
+            restObject["식당"].append(rest)
         except:
             pass
-print(rest)
+print(len(restObject["식당"]))
+with open('hanchelin-guide-change.json', 'w', encoding='utf8') as result:
+    json.dump(restObject, result)
