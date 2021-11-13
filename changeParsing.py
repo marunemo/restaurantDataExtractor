@@ -53,6 +53,21 @@ with open("hanchelin-guide-export.json") as jsonFile:
                     for day in validWeek:
                         weekHours[day] = [hours.split(" ~ ")]
             weekObject = {'onlyBreak': onlyBreak, 'breakDate': breakDate}
+            breakWeek = []
+            breakDay = []
+            for restDate in breakDate.replace('요일', '').split():
+                if restDate == '첫째':
+                    breakWeek.append(0)
+                elif restDate == '둘째':
+                    breakWeek.append(1)
+                elif restDate == '셋째':
+                    breakWeek.append(2)
+                elif restDate == '넷째':
+                    breakWeek.append(3)
+                elif restDate in week:
+                    breakDay.append((week.index(restDate) + 1) % 7)
+            weekObject['breakWeek'] = breakWeek
+            weekObject['breakDay'] = breakDay
             for day in week:
                 dayWeek = sorted(weekHours[day])
                 weekObject[day] = dayWeek
