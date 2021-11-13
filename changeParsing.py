@@ -52,14 +52,11 @@ with open("hanchelin-guide-export.json") as jsonFile:
                     onlyBreak = False
                     for day in validWeek:
                         weekHours[day] = [hours.split(" ~ ")]
-            if type(weekHours) == str:
-                rest['hour_of_operation'] = weekHours
-            else:
-                weekObject = {'onlyBreak': onlyBreak, 'breakDate': breakDate}
-                for day in week:
-                    dayWeek = sorted(weekHours[day])
-                    weekObject[day] = dayWeek
-                rest['hour_of_operation'] = weekObject
+            weekObject = {'onlyBreak': onlyBreak, 'breakDate': breakDate}
+            for day in week:
+                dayWeek = sorted(weekHours[day])
+                weekObject[day] = dayWeek
+            rest['hour_of_operation'] = weekObject
             restObject["식당"].append(rest)
         except KeyError as e:
             restObject["식당"].append(rest)
