@@ -55,7 +55,7 @@ with open("hanchelin-guide-export.json") as jsonFile:
             weekObject = {'onlyBreak': onlyBreak, 'breakDate': breakDate}
             breakWeek = []
             breakDay = []
-            for restDate in breakDate.replace('요일', '').split():
+            for restDate in breakDate.replace(',', '').replace('요일', '').split():
                 if restDate == '첫째':
                     breakWeek.append(0)
                 elif restDate == '둘째':
